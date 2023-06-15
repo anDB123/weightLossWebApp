@@ -1,0 +1,12 @@
+<div>
+    <label for="weightInput">Weight:</label>
+    <input id="weightInput" #weight placeholder="weight (kg)">
+</div>
+<div>
+    <label for="dateInput">Date:</label>
+    <input id="dateInput" #date placeholder="DD/MM/YYYY">
+</div>
+<button id="entryButton" (click)="enterWeightDate(weight.value, date.value)">Add Entry</button>
+<div>
+    <canvas id="BarChart"></canvas>
+</div>

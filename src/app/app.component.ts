@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { HousingLocation } from './housing-location';
+
 
 @Component({
   selector: 'app-root',
