@@ -1,4 +1,4 @@
 export interface WeightDateDb {
     weight: number,
-    date: string
+    date: Date
 }

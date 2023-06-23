@@ -19,14 +19,17 @@ export class AddEntryComponent implements OnInit {
     this.updateBarChart();
   }
 
+
+
   updateBarChart() {
     if (this.chart)
       this.chart.destroy();
     let weightArray: Number[] = [];
     let dateArray: string[] = [];
+    this.weightDb.sort((a, b) => a.date.valueOf() - b.date.valueOf());
     for (const weightDate of this.weightDb) {
       weightArray.push(weightDate.weight);
-      dateArray.push(weightDate.date);
+      dateArray.push(weightDate.date.getDate() + "/" + (weightDate.date.getMonth() + 1) + "/" + weightDate.date.getFullYear());
     }
     let myData = {// values on X-Axis
       labels: dateArray,
@@ -42,7 +45,8 @@ export class AddEntryComponent implements OnInit {
       type: 'bar', //this denotes tha type of chart
       data: myData,
       options: {
-        aspectRatio: 2.5
+        responsive: true,
+        maintainAspectRatio: false,
       }
 
     });
@@ -51,8 +55,10 @@ export class AddEntryComponent implements OnInit {
   enterWeightDate(weightInput: string, date: string): void {
     if (!weightInput || !date)
       return;
-    this.weightDb.push({ weight: Number(weightInput), date: date });
-    console.log("added weight and date \n" + this.weightDb.at(-1)?.weight + ", " + this.weightDb.at(-1)?.date);
+    console.log("day is: " + date)
+    const dateConv = new Date(date);
+    this.weightDb.push({ weight: Number(weightInput), date: dateConv });
+    //console.log("added weight and date \n" + this.weightDb.at(-1)?.weight + ", " + this.weightDb.at(-1)?.year);
     this.updateBarChart();
   }
 }

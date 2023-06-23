@@ -1,12 +1,25 @@
-<div>
-    <label for="weightInput">Weight:</label>
-    <input id="weightInput" #weight placeholder="weight (kg)">
+<div class="container">
+    <div class="item item-1 colcontainer">
+        <div class=item>
+            <label for="weightInput">Weight:</label>
+        </div>
+        <div class="item">
+            <input type="number" id="weightInput" #weight placeholder="weight (kg)">
+        </div>
+    </div>
+    <div class="item item-2">
+        <mat-form-field>
+            <mat-label>Choose a date</mat-label>
+            <input matInput [matDatepicker]="picker" #datepicker>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+    </div>
+    <div class="item item-3">
+        <button id="entryButton" (click)="enterWeightDate(weight.value,datepicker.value)">Add Entry</button>
+    </div>
 </div>
-<div>
-    <label for="dateInput">Date:</label>
-    <input id="dateInput" #date placeholder="DD/MM/YYYY">
-</div>
-<button id="entryButton" (click)="enterWeightDate(weight.value, date.value)">Add Entry</button>
-<div>
+<div class="item">
     <canvas id="BarChart"></canvas>
+
 </div>

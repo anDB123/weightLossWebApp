@@ -13,3 +13,62 @@ h1 {
     margin: 0;
     padding: 0;
 }
+
+@import "../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css";
+
+.container {
+    display: grid;
+    justify-content: center;
+    grid-template-columns: fit-content;
+    grid-gap: 10px;
+}
+
+.item {
+    align-content: center;
+    text-align: center;
+    margin: auto;
+}
+
+h1 {
+    /*code to make all paragraphs red */
+    color: red;
+}
+
+h3 {
+    color: blue;
+}
+
+button {
+    font-size: 15px;
+    border-radius: 5px;
+    padding: 10px 24px;
+    transition-duration: 0.4s;
+}
+
+button:hover {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.colcontainer {
+    display: grid;
+    justify-content: center;
+    grid-template-columns: 0.5fr 0.5fr;
+    grid-gap: 10px;
+
+
+}
+
+canvas {
+
+    width: 100%;
+    height: 50vh;
+
+}
+
+input {
+    font-size: 15px;
+    border-radius: 5px;
+    padding: 10px 24px;
+    transition-duration: 0.4s;
+}
