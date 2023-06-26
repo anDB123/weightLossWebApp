@@ -14,6 +14,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { AuthModule } from '@auth0/auth0-angular';
 import { LoginButtonComponent } from './login-button/login-button.component';
 import { AuthButtonComponent } from './auth-button/auth-button.component';
+import { LogoutButtonComponent } from './logout-button/logout-button.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,8 @@ import { AuthButtonComponent } from './auth-button/auth-button.component';
     BarChartComponent,
     LoginButtonComponent,
     AuthButtonComponent,
+    LogoutButtonComponent,
+    UserProfileComponent,
   ],
   imports: [
     BrowserModule,
