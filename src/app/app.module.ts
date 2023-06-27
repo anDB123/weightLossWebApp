@@ -16,6 +16,9 @@ import { LoginButtonComponent } from './login-button/login-button.component';
 import { AuthButtonComponent } from './auth-button/auth-button.component';
 import { LogoutButtonComponent } from './logout-button/logout-button.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { TargetInputComponent } from './target-input/target-input.component';
+
+
 
 @NgModule({
   declarations: [
@@ -26,6 +29,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     AuthButtonComponent,
     LogoutButtonComponent,
     UserProfileComponent,
+    TargetInputComponent,
   ],
   imports: [
     BrowserModule,

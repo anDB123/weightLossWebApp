@@ -1,0 +1,32 @@
+<div class="container">
+    <div class="item item-1 colcontainer">
+        <div class=item>
+            <label for="heightInput">Height:</label>
+        </div>
+        <div class="item">
+            <input type="number" id="heightInput" #height placeholder="height (cm)">
+        </div>
+    </div>
+    <div class="item item-2 colcontainer">
+        <div class="item">
+            <label for="targetWeightInput">Target Weight:</label>
+        </div>
+        <div class="item">
+            <input type="number" id="targetWeightInput" #targetWeight placeholder="target weight (kg)">
+        </div>
+    </div>
+    <div class="item item-3 colcontainer">
+        <div class="item"> <button id="entryButton" (click)="enterTargets(height.value,targetWeight.value)">Add Target
+                Weight</button>
+        </div>
+        <div class="item">
+            <h1 id="bmiVal"></h1>
+        </div>
+
+
+    </div>
+</div>
+<div class="item">
+    <canvas id="BarChart"></canvas>
+
+</div>

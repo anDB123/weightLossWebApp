@@ -1,7 +1,7 @@
-const express = require("express")
+const express = require("express");
 const app = express();
 app.use(express.json());
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
 
 const uri = "mongodb+srv://yourfavouritegamerproductions:Brown010500@cluster0.zifuqew.mongodb.net/?retryWrites=true&w=majority";
 
@@ -28,4 +28,8 @@ database.once('connected', () => {
 
 const routes = require('./routes/routes');
 
-app.use('/api', routes)
+app.use('/api', routes);
+var listener = app.listen(4201, function () {
+    console.log('Listening on port ' + listener.address().port); //Listening on port 8888
+});
+
