@@ -18,7 +18,7 @@ import { LogoutButtonComponent } from './logout-button/logout-button.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { TargetInputComponent } from './target-input/target-input.component';
 
-
+import { MatRadioModule } from '@angular/material/radio';
 
 @NgModule({
   declarations: [
@@ -46,6 +46,7 @@ import { TargetInputComponent } from './target-input/target-input.component';
         redirect_uri: window.location.origin
       }
     }),
+    MatRadioModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

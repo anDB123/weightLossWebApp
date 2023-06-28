@@ -22,8 +22,16 @@
     <div class="item item-4">
         <app-target-input></app-target-input>
     </div>
+    <div class="item">
+        <mat-radio-group aria-label="Select an option">
+            <mat-radio-button value="1" id="weightRadio" [checked]="true" (click)="changeGraphType('weight')">Weight
+                Graph</mat-radio-button>
+            <mat-radio-button value="2" (click)="changeGraphType('bmi')">BMI Graph</mat-radio-button>
+        </mat-radio-group>
+    </div>
 </div>
-<div class="item">
-    <canvas id="BarChart"></canvas>
 
+
+<div class=" item">
+    <canvas id="BarChart"></canvas>
 </div>

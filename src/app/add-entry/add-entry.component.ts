@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { WeightDateDb } from '../weight-date-db';
 import { Chart, registerables, } from 'chart.js';
+
 Chart.register(...registerables);
 
 @Component({
@@ -20,8 +21,8 @@ export class AddEntryComponent implements OnInit {
       let tempWeightDateDb: WeightDateDb[] = [];
       localStorage.setItem("weightDb", JSON.stringify(tempWeightDateDb));
     }
-
-    this.updateBarChart();
+    localStorage.setItem("graphType", "weight");
+    this.updateGraph();
   }
 
   dateTimeReviver = function (key: any, value: any) {
@@ -38,27 +39,17 @@ export class AddEntryComponent implements OnInit {
   deleteData() {
     let tempWeightDateDb: WeightDateDb[] = [];
     localStorage.setItem("weightDb", JSON.stringify(tempWeightDateDb));
-    this.updateBarChart();
+    this.updateBarChartWeight();
   }
-  updateBarChart() {
+  updateBarChart(dateArray: string[], valueArray: Number[], label: string): any {
     if (this.chart)
       this.chart.destroy();
-    let weightArray: Number[] = [];
-    let dateArray: string[] = [];
-
-
-    let weightDb: WeightDateDb[] = JSON.parse(localStorage.getItem("weightDb") || '{}', this.dateTimeReviver);
-    weightDb.sort((a, b) => a.date.localeCompare(b.date));
-    for (const weightDate of weightDb) {
-      weightArray.push(weightDate.weight);
-      dateArray.push(weightDate.date);
-    }
     let myData = {// values on X-Axis
       labels: dateArray,
       datasets: [
         {
-          label: "Weight",
-          data: weightArray,
+          label: label,
+          data: valueArray,
           backgroundColor: 'blue'
         },
       ]
@@ -74,6 +65,41 @@ export class AddEntryComponent implements OnInit {
     });
     return this.chart;
   }
+  updateBarChartWeight(): any {
+
+    let weightArray: Number[] = [];
+    let dateArray: string[] = [];
+
+
+    let weightDb: WeightDateDb[] = JSON.parse(localStorage.getItem("weightDb") || '{}', this.dateTimeReviver);
+    weightDb.sort((a, b) => a.date.localeCompare(b.date));
+    for (const weightDate of weightDb) {
+      weightArray.push(weightDate.weight);
+      dateArray.push(weightDate.date);
+    }
+    this.updateBarChart(dateArray, weightArray, "Weight");
+  }
+  updateBarChartBmi(): any {
+    if (this.chart)
+      this.chart.destroy();
+    let weightArray: Number[] = [];
+    let heightArray: Number[] = [];
+    let dateArray: string[] = [];
+
+    let weightDb: WeightDateDb[] = JSON.parse(localStorage.getItem("weightDb") || '{}', this.dateTimeReviver);
+    weightDb.sort((a, b) => a.date.localeCompare(b.date));
+    for (const weightDate of weightDb) {
+      weightArray.push(weightDate.weight);
+      dateArray.push(weightDate.date);
+    }
+    let height = Number(localStorage.getItem("height"));
+
+    for (const weight of weightArray) {
+      let bmi: Number = weight.valueOf() / ((height / 100) * (height / 100));
+      heightArray.push(Number(bmi.toFixed(1)))
+    }
+    return this.updateBarChart(dateArray, heightArray, "BMI");
+  }
   enterWeightDate(weightInput: string, date: string): void {
     if (!weightInput || !date)
       return;
@@ -83,7 +109,19 @@ export class AddEntryComponent implements OnInit {
     weightDb.push({ weight: Number(weightInput), date: date });
     localStorage.setItem("weightDb", JSON.stringify(weightDb));
 
-    this.updateBarChart();
-
+    this.updateGraph();
+  }
+  updateGraph(): void {
+    let graphType = localStorage.getItem("graphType");
+    if (graphType == "weight") {
+      this.updateBarChartWeight();
+    }
+    else if (graphType == "bmi") {
+      this.updateBarChartBmi();
+    }
+  }
+  changeGraphType(graphType: string): void {
+    localStorage.setItem("graphType", graphType);
+    this.updateGraph();
   }
 }
