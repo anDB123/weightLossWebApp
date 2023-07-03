@@ -1,37 +1,39 @@
 <div class="container">
-    <div class="item item-1 colcontainer">
-        <div class=item>
-            <label for="weightInput">Weight:</label>
-        </div>
+    <div class="item item-1 canvasColContainer">
         <div class="item">
-            <input type="number" id="weightInput" #weight placeholder="weight (kg)">
+            <div>
+                <canvas id="BarChart"></canvas>
+            </div>
+            <div class="item">
+                <button id="weightGraphButton" (click)="changeGraphType('weight')"> Weight
+                    Graph </button>
+                <button id="bmiGraphButton" (click)="changeGraphType('bmi')">BMI Graph</button>
+            </div>
+
+        </div>
+
+        <div class=item>
+            <div class="colcontainer">
+
+                <div class="item item-1">
+                    <label for="weightInput">Weight:</label>
+                </div>
+                <div class="item item-2">
+                    <input type="number" id="weightInput" #weight placeholder="weight (kg)">
+                </div>
+            </div>
+            <div class="item item-2">
+                <mat-form-field>
+                    <mat-label>Choose a date</mat-label>
+                    <input matInput [matDatepicker]="picker" #datepicker>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="item item-3">
+                <button id="entryButton" (click)="enterWeightDate(weight.value,datepicker.value)">Add Entry</button>
+
+            </div>
         </div>
     </div>
-    <div class="item item-2">
-        <mat-form-field>
-            <mat-label>Choose a date</mat-label>
-            <input matInput [matDatepicker]="picker" #datepicker>
-            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
-    </div>
-    <div class="item item-3">
-        <button id="entryButton" (click)="enterWeightDate(weight.value,datepicker.value)">Add Entry</button>
-        <button id="removeButton" (click)="deleteData()">Delete Data</button>
-    </div>
-    <div class="item item-4">
-        <app-target-input></app-target-input>
-    </div>
-    <div class="item">
-        <mat-radio-group aria-label="Select an option">
-            <mat-radio-button value="1" id="weightRadio" [checked]="true" (click)="changeGraphType('weight')">Weight
-                Graph</mat-radio-button>
-            <mat-radio-button value="2" (click)="changeGraphType('bmi')">BMI Graph</mat-radio-button>
-        </mat-radio-group>
-    </div>
-</div>
-
-
-<div class=" item">
-    <canvas id="BarChart"></canvas>
 </div>

@@ -4,7 +4,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AddEntryComponent } from './add-entry/add-entry.component';
-import { BarChartComponent } from './bar-chart/bar-chart.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
@@ -12,24 +11,24 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 // Import the module from the SDK
 import { AuthModule } from '@auth0/auth0-angular';
-import { LoginButtonComponent } from './login-button/login-button.component';
-import { AuthButtonComponent } from './auth-button/auth-button.component';
-import { LogoutButtonComponent } from './logout-button/logout-button.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { TargetInputComponent } from './target-input/target-input.component';
+import { DataTableComponent } from './data-table/data-table.component';
 
 import { MatRadioModule } from '@angular/material/radio';
+import { MatTableModule } from '@angular/material/table';
+import { UpdateChartService } from './update-chart.service';
+
+
 
 @NgModule({
   declarations: [
     AppComponent,
     AddEntryComponent,
-    BarChartComponent,
-    LoginButtonComponent,
-    AuthButtonComponent,
-    LogoutButtonComponent,
     UserProfileComponent,
     TargetInputComponent,
+    DataTableComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -47,8 +46,9 @@ import { MatRadioModule } from '@angular/material/radio';
       }
     }),
     MatRadioModule,
+    MatTableModule,
   ],
-  providers: [],
+  providers: [UpdateChartService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

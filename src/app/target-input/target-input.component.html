@@ -1,32 +1,42 @@
 <div class="container">
-    <div class="item item-1 colcontainer">
-        <div class=item>
-            <label for="heightInput">Height:</label>
+    <button (click)=toggleAdditionalInput()>Add Additional Data</button>
+    <div id="additionalData">
+        <div class="colcontainer">
+            <div class=item>
+                <label for="heightInput">Height:</label>
+            </div>
+            <div class="item">
+                <input type="number" id="heightInput" #height placeholder="height (cm)">
+            </div>
         </div>
-        <div class="item">
-            <input type="number" id="heightInput" #height placeholder="height (cm)">
+        <div class="colcontainer">
+            <div class="item">
+                <label for="targetWeightInput">Target Weight:</label>
+            </div>
+            <div class="item">
+                <input type="number" id="targetWeightInput" #targetWeight placeholder="target weight (kg)">
+            </div>
+
         </div>
-    </div>
-    <div class="item item-2 colcontainer">
-        <div class="item">
-            <label for="targetWeightInput">Target Weight:</label>
-        </div>
-        <div class="item">
-            <input type="number" id="targetWeightInput" #targetWeight placeholder="target weight (kg)">
-        </div>
-    </div>
-    <div class="item item-3 colcontainer">
-        <div class="item"> <button id="entryButton" (click)="enterTargets(height.value,targetWeight.value)">Add Target
-                Weight</button>
-        </div>
-        <div class="item">
-            <h1 id="bmiVal"></h1>
+        <div class="colcontainer">
+            <div class="item">
+                <label for="weightLossMonthsInput">Months to lose Weight</label>
+            </div>
+            <div class="item">
+                <input type="number" id="weightLossMonthsInput" #weightLossMonths placeholder="months">
+            </div>
         </div>
 
+        <div class="item"> <button id="entryButton"
+                (click)="enterTargets(height.value,targetWeight.value, weightLossMonths.value)">Add Info</button>
+        </div>
+        <div class="item">
+            <h2 id="bmiVal">BMI: </h2>
+        </div>
+        <div class="item">
+            <h2 id="calorieGoal">Calorie Goal: </h2>
+        </div>
 
     </div>
-</div>
-<div class="item">
-    <canvas id="BarChart"></canvas>
 
 </div>

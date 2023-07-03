@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { WeightDateDb } from '../weight-date-db';
 import { Chart, registerables, } from 'chart.js';
+import { UpdateChartService } from '../update-chart.service';
 
 Chart.register(...registerables);
 
@@ -11,18 +12,19 @@ Chart.register(...registerables);
 })
 export class AddEntryComponent implements OnInit {
   public chart: any;
+  tableData: WeightDateDb[] = [];
 
-
-
-  constructor() { }
+  constructor(private _updateChartService: UpdateChartService) { }
 
   ngOnInit(): void {
+    this._updateChartService.updateBarChart([], [], "Weight");
     if (localStorage.getItem("weightDb") === null) {
       let tempWeightDateDb: WeightDateDb[] = [];
       localStorage.setItem("weightDb", JSON.stringify(tempWeightDateDb));
     }
     localStorage.setItem("graphType", "weight");
-    this.updateGraph();
+    this.changeGraphType("weight");
+    this._updateChartService.updateBoth();
   }
 
   dateTimeReviver = function (key: any, value: any) {
@@ -39,89 +41,73 @@ export class AddEntryComponent implements OnInit {
   deleteData() {
     let tempWeightDateDb: WeightDateDb[] = [];
     localStorage.setItem("weightDb", JSON.stringify(tempWeightDateDb));
-    this.updateBarChartWeight();
+    this._updateChartService.updateBoth();
   }
-  updateBarChart(dateArray: string[], valueArray: Number[], label: string): any {
-    if (this.chart)
-      this.chart.destroy();
-    let myData = {// values on X-Axis
-      labels: dateArray,
-      datasets: [
-        {
-          label: label,
-          data: valueArray,
-          backgroundColor: 'blue'
-        },
-      ]
-    }
-    this.chart = new Chart("BarChart", {
-      type: 'bar', //this denotes tha type of chart
-      data: myData,
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-      }
-
-    });
-    return this.chart;
+  viewDataTable() {
+    let tempWeightDateDb: WeightDateDb[] = JSON.parse(localStorage.getItem("weightDb") || '{}', this.dateTimeReviver);
+    tempWeightDateDb.sort((a, b) => a.date.localeCompare(b.date));
+    this.tableData = tempWeightDateDb;
   }
-  updateBarChartWeight(): any {
 
-    let weightArray: Number[] = [];
-    let dateArray: string[] = [];
-
-
-    let weightDb: WeightDateDb[] = JSON.parse(localStorage.getItem("weightDb") || '{}', this.dateTimeReviver);
-    weightDb.sort((a, b) => a.date.localeCompare(b.date));
-    for (const weightDate of weightDb) {
-      weightArray.push(weightDate.weight);
-      dateArray.push(weightDate.date);
-    }
-    this.updateBarChart(dateArray, weightArray, "Weight");
-  }
-  updateBarChartBmi(): any {
-    if (this.chart)
-      this.chart.destroy();
-    let weightArray: Number[] = [];
-    let heightArray: Number[] = [];
-    let dateArray: string[] = [];
-
-    let weightDb: WeightDateDb[] = JSON.parse(localStorage.getItem("weightDb") || '{}', this.dateTimeReviver);
-    weightDb.sort((a, b) => a.date.localeCompare(b.date));
-    for (const weightDate of weightDb) {
-      weightArray.push(weightDate.weight);
-      dateArray.push(weightDate.date);
-    }
-    let height = Number(localStorage.getItem("height"));
-
-    for (const weight of weightArray) {
-      let bmi: Number = weight.valueOf() / ((height / 100) * (height / 100));
-      heightArray.push(Number(bmi.toFixed(1)))
-    }
-    return this.updateBarChart(dateArray, heightArray, "BMI");
-  }
   enterWeightDate(weightInput: string, date: string): void {
     if (!weightInput || !date)
       return;
     console.log("day is: " + date)
 
+    let inputDate = new Date(date);
+    let currentDate: Date = new Date();
+    if (inputDate > currentDate) {
+      alert("You cannot enter a date in the future");
+      return;
+    }
+    if (Number(weightInput) < 0) {
+      alert("You cannot enter a negative weight");
+      return;
+    }
     let weightDb: WeightDateDb[] = JSON.parse(localStorage.getItem("weightDb") || '{}', this.dateTimeReviver);
+    //alert if date already in weightDB
+    for (let i = 0; i < weightDb.length; i++) {
+      if (weightDb[i].date == date) {
+        alert("You already entered a weight for this date");
+        return;
+      }
+    }
     weightDb.push({ weight: Number(weightInput), date: date });
-    localStorage.setItem("weightDb", JSON.stringify(weightDb));
 
-    this.updateGraph();
+    //sort weight date by date
+    weightDb.sort((a, b) => this._updateChartService.convertDateStringToMilliseconds(b.date) - this._updateChartService.convertDateStringToMilliseconds(a.date));
+    localStorage.setItem("weightDb", JSON.stringify(weightDb));
+    this._updateChartService.updateBoth();
   }
-  updateGraph(): void {
-    let graphType = localStorage.getItem("graphType");
-    if (graphType == "weight") {
-      this.updateBarChartWeight();
-    }
-    else if (graphType == "bmi") {
-      this.updateBarChartBmi();
-    }
-  }
+
   changeGraphType(graphType: string): void {
+    //check that height has been set in local storage before allowing bmi graph
+    if (graphType == "bmi" && !localStorage.getItem("height")) {
+      alert("You must set your height before viewing BMI");
+    }
     localStorage.setItem("graphType", graphType);
-    this.updateGraph();
+    //set button for weightGraphButton to a greyed out color
+    let weightGraphButton: HTMLInputElement = <HTMLInputElement>document.getElementById("weightGraphButton");
+    let bmiGraphButton: HTMLInputElement = <HTMLInputElement>document.getElementById("bmiGraphButton");
+    if (weightGraphButton && bmiGraphButton) {
+      weightGraphButton.style.backgroundColor = "white";
+      weightGraphButton.style.color = "black";
+      bmiGraphButton.style.backgroundColor = "white";
+      bmiGraphButton.style.color = "black";
+      if (graphType == "weight") {
+        weightGraphButton.style.color = "white";
+        weightGraphButton.style.backgroundColor = "blue";
+
+      }
+      else if (graphType == "bmi") {
+        bmiGraphButton.style.backgroundColor = "blue";
+        bmiGraphButton.style.color = "white";
+      }
+    }
+
+    this._updateChartService.updateBoth();
   }
+
+
+
 }

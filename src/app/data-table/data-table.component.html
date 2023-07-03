@@ -1,0 +1,24 @@
+<div class="container">
+
+    <button id="showDataButton" (click)="toggleDataTable()">Show Data Table</button>
+    <div id="dataTable">
+
+        <button id="removeButton" (click)="deleteData()">Delete All Data</button>
+
+        <button id="removeButton" (click)="viewDataTable()">View All Data</button>
+
+
+        <table id="weightDateTable">
+            <tr>
+                <td>Date</td>
+                <td>Weight</td>
+                <td>Delete?</td>
+            </tr>
+        </table>
+
+
+
+        <button id="downloadCSV" (click)="downloadDataAsCSV()">Download Data as CSV</button>
+
+    </div>
+</div>
