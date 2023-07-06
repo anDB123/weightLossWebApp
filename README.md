@@ -1,27 +1,9 @@
 # WeightLossWebApp
+This is a web app for tracking weight loss. It uses Angular for frontend with Chart.js for the graph. 
+This was used for project based learning. I learned Angular frontend development here.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.0.5.
+It looks like this:
+<img width="1179" alt="Screenshot 2023-07-04 at 21 23 18" src="https://github.com/anDB123/weightLossWebApp/assets/15526777/70ce3200-bcd6-4e9b-8fc8-9d810e5a2006">
 
-## Development server
+Sadly, not hosted anywhere yet but one day it might be...
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
